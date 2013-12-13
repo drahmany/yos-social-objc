@@ -33,8 +33,8 @@ static NSString *const kYAPBaseUrl = @"http://appstore.apps.yahooapis.com";
 	[requestParameters setObject:self.format forKey:@"format"];
 	[requestParameters setObject:self.user.region forKey:@"region"];
 	[requestParameters setObject:self.user.language forKey:@"lang"];
-	[requestParameters setObject:[NSString stringWithFormat:@"%d", start] forKey:@"start"];
-	[requestParameters setObject:[NSString stringWithFormat:@"%d", count] forKey:@"count"];
+	[requestParameters setObject:[NSString stringWithFormat:@"%ld", start] forKey:@"start"];
+	[requestParameters setObject:[NSString stringWithFormat:@"%ld", count] forKey:@"count"];
 	
 	YOSRequestClient *client = [self requestClient];
 	[client setOauthParamsLocation:@"OAUTH_PARAMS_IN_QUERY_STRING"];
@@ -54,8 +54,8 @@ static NSString *const kYAPBaseUrl = @"http://appstore.apps.yahooapis.com";
 	[requestParameters setObject:self.format forKey:@"format"];
 	[requestParameters setObject:self.user.region forKey:@"region"];
 	[requestParameters setObject:self.user.language forKey:@"lang"];
-	[requestParameters setObject:[NSString stringWithFormat:@"%d", start] forKey:@"start"];
-	[requestParameters setObject:[NSString stringWithFormat:@"%d", count] forKey:@"count"];
+	[requestParameters setObject:[NSString stringWithFormat:@"%ld", start] forKey:@"start"];
+	[requestParameters setObject:[NSString stringWithFormat:@"%ld", count] forKey:@"count"];
 	
 	YOSRequestClient *client = [self requestClient];
 	[client setOauthParamsLocation:@"OAUTH_PARAMS_IN_QUERY_STRING"];
@@ -69,7 +69,7 @@ static NSString *const kYAPBaseUrl = @"http://appstore.apps.yahooapis.com";
 - (BOOL)fetchContactWithID:(NSInteger)contactId withDelegate:(id)delegate
 {
 	NSString *method = [NSString stringWithFormat:@"contact"];
-	NSString *requestUrl = [NSString stringWithFormat:@"%@/%@/%@/%@/%@/%@", self.baseUrl, self.apiVersion, @"user", self.user.guid, method, [NSString stringWithFormat:@"%d", contactId]];
+	NSString *requestUrl = [NSString stringWithFormat:@"%@/%@/%@/%@/%@/%@", self.baseUrl, self.apiVersion, @"user", self.user.guid, method, [NSString stringWithFormat:@"%ld", contactId]];
 	NSURL *url = [NSURL URLWithString:requestUrl];
 	
 	NSMutableDictionary *requestParameters = [NSMutableDictionary dictionary];
@@ -132,7 +132,7 @@ static NSString *const kYAPBaseUrl = @"http://appstore.apps.yahooapis.com";
 	
 	NSMutableDictionary *requestParameters = [NSMutableDictionary dictionary];
 	[requestParameters setObject:@"sync" forKey:@"view"];
-	[requestParameters setObject:[NSString stringWithFormat:@"%d", revision] forKey:@"rev"];
+	[requestParameters setObject:[NSString stringWithFormat:@"%ld", revision] forKey:@"rev"];
 	[requestParameters setObject:self.format forKey:@"format"];
 	[requestParameters setObject:self.user.region forKey:@"region"];
 	[requestParameters setObject:self.user.language forKey:@"lang"];
@@ -209,7 +209,7 @@ static NSString *const kYAPBaseUrl = @"http://appstore.apps.yahooapis.com";
 
 - (BOOL)fetchConnectionProfilesWithStart:(NSInteger)start andCount:(NSInteger)count withDelegate:(id)delegate
 {	
-	NSString *queryJoin = [NSString stringWithFormat:@"select guid from social.connections(%d,%d) where owner_guid=\"%@\"", start, count, user.guid];
+	NSString *queryJoin = [NSString stringWithFormat:@"select guid from social.connections(%ld,%ld) where owner_guid=\"%@\"", start, count, user.guid];
 	return [self query:[NSString stringWithFormat:@"select * from social.profile where guid in (%@)", queryJoin] withDelegate:delegate];
 }
 
@@ -227,7 +227,7 @@ static NSString *const kYAPBaseUrl = @"http://appstore.apps.yahooapis.com";
 
 - (BOOL)fetchConnectionsStatusWithStart:(NSInteger)start andCount:(NSInteger)count withDelegate:(id)delegate
 {
-	NSString *yqlJoin = [NSString stringWithFormat:@"select guid from social.connections(%d,%d) where owner_guid=\"%@\"", start, count, user.guid];
+	NSString *yqlJoin = [NSString stringWithFormat:@"select guid from social.connections(%ld,%ld) where owner_guid=\"%@\"", start, count, user.guid];
 	return [self query:[NSString stringWithFormat:@"select guid,status from social.profile where guid in (%@) | sort(field=\"status.lastStatusModified\") | reverse()", yqlJoin] 
 		  withDelegate:delegate];
 }
@@ -264,8 +264,8 @@ static NSString *const kYAPBaseUrl = @"http://appstore.apps.yahooapis.com";
 	[requestParameters setObject:self.format forKey:@"format"];
 	[requestParameters setObject:self.user.region forKey:@"region"];
 	[requestParameters setObject:self.user.language forKey:@"lang"];
-	[requestParameters setObject:[NSString stringWithFormat:@"%d", start] forKey:@"start"];
-	[requestParameters setObject:[NSString stringWithFormat:@"%d", count] forKey:@"count"];
+	[requestParameters setObject:[NSString stringWithFormat:@"%ld", start] forKey:@"start"];
+	[requestParameters setObject:[NSString stringWithFormat:@"%ld", count] forKey:@"count"];
 	[requestParameters setObject:updatesTransform forKey:@"transform"];
 	
 	YOSRequestClient *client = [self requestClient];
@@ -289,8 +289,8 @@ static NSString *const kYAPBaseUrl = @"http://appstore.apps.yahooapis.com";
 	[requestParameters setObject:self.format forKey:@"format"];
 	[requestParameters setObject:self.user.region forKey:@"region"];
 	[requestParameters setObject:self.user.language forKey:@"lang"];
-	[requestParameters setObject:[NSString stringWithFormat:@"%d", start] forKey:@"start"];
-	[requestParameters setObject:[NSString stringWithFormat:@"%d", count] forKey:@"count"];
+	[requestParameters setObject:[NSString stringWithFormat:@"%ld", start] forKey:@"start"];
+	[requestParameters setObject:[NSString stringWithFormat:@"%ld", count] forKey:@"count"];
 	[requestParameters setObject:updatesTransform forKey:@"transform"];
 	
 	YOSRequestClient *client = [self requestClient];
@@ -320,7 +320,7 @@ static NSString *const kYAPBaseUrl = @"http://appstore.apps.yahooapis.com";
 	
 	if(aDate == nil) aDate = [NSDate date];
 	
-	NSString *timestamp = [NSString stringWithFormat:@"%d", (long)[aDate timeIntervalSince1970]];
+	NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)[aDate timeIntervalSince1970]];
 	NSString *updateSource = [NSString stringWithFormat:@"APP.%@", theSession.applicationId];
 	
 	NSMutableDictionary *updateData = [NSMutableDictionary dictionary];
